@@ -1,2 +1,2 @@
-# devops-workshop-express
-CI_CD workshop
+# docker-ci-cd-example
+Simple CI/CD example using Docker, Composer and NodeJS.
