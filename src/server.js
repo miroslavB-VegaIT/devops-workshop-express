@@ -5,13 +5,13 @@ const mongoose = require('mongoose');
 
 const PORT = 8081;// Can be any port, but it has to match the Docker exposed ports.
 const HOST = '0.0.0.0';// Localhost
-const MONGO_URL = 'mongodb://mongo/test-express';// Url to the mongo container and test-express database.
+const MONGO_URL = 'mongodb://mongo/test-express';// Url to the mongo container (yaml) and test-express database.
 
 mongoose.connect(MONGO_URL, { useNewUrlParser: true })
   .then(() => {
     const app = express();
 
-    app.get('/', (req, res) => res.send("Hello world!!"));
+    app.get('/', (req, res) => res.send("Bravo Ivane, radi ko ludo! :)"));
 
     app.listen(PORT, HOST);
 

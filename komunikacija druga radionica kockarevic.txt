@@ -1,0 +1,121 @@
+Ivan Kockarevic10:05 AM
+https://docs.google.com/presentation/d/147EIrkxJLoOTDbVQAeTml6oDgS1Rp-GBk1HiLu6X6ec/edit?usp=sharing
+Nemanja Sobo10:06 AM
+ako mozes odma da podelis ovu build skriptu iz jenkinsa
+Ivan Kockarevic10:12 AM
+xcopy /y /E /H /C /I "%WORKSPACE%" "D:\deployments\devops-workshop-express"
+D:
+cd deployments\devops-workshop-express
+ 
+docker-compose up -d --build
+Ivan Kockarevic10:21 AM
+btw personal account stavite svi
+Katarina Ivanic10:24 AM
+Neke kolege su pitale gde mogu da nadju snimak prethodne radionice. :) Da li neko zna?
+Zorana Deuric10:24 AM
+https://drive.google.com/drive/folders/1uv1B3LRPLacmcYdCw7g3mNSPjKi4e0qf?usp=sharing
+Nemanja Sobo10:24 AM
+poslao sam ti na skype :D
+Katarina Ivanic10:27 AM
+Hvalaaa :) Prosledicu i ja dalje :)
+Milos Roknic10:42 AM
+ls -la :P
+Stevan Kapicic10:43 AM
+exit
+Ivan Kockarevic10:44 AM
+ssh -i /c/Users/Ivan/.ssh/newkyepair.pem ubuntu@ec2-3-120-237-254.eu-central-1.compute.amazonaws.com
+Katarina Ivanic10:45 AM
+Ja ne mogu da se logujem na console :/
+Kosta Kupresak10:45 AM
+За излаз се може искористити и logout, не знам да ли има разлике
+Stevan Kapicic10:45 AM
+@Katarina otvori novi incognito ili obrise cookie-e
+obrisi*
+Ivan Kockarevic10:49 AM
+Napomena
+Logujete se kao ROOT user
+ne kao IAM
+Ivan Kockarevic11:11 AM
+Resources:
+  Ec2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+      SecurityGroups:
+        - !Ref InstanceSecurityGroup
+      KeyName: basepc
+      ImageId: ami-0e342d72b12109f91
+  InstanceSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+Stevan Kapicic11:18 AM
+CREATE_FAILED	The image id '[ami-0e342d72b12109f91]' does not exist (Service: AmazonEC2; Status Code: 400; Error Code: InvalidAMIID.NotFound; Request ID: 24834964-9f3d-43be-ad50-c006aee9c02d)
+Marko Stankov11:18 AM
+same here
+Katarina Ivanic11:19 AM
+yes
+isto
+Kosta Kupresak11:21 AM
+Ако одете да видите ваше инстанце па селектујете инстанцу можете наћи под AMI ID ваш инстац ИД
+Stevan Kapicic11:24 AM
+opet fail, key name invalid
+promenite u svoj key name
+op nije ni to
+The key pair 'aws_rsa' does not exist (Service: AmazonEC2; Status Code: 400; Error Code: InvalidKeyPair.NotFound; Request ID: 36cd11af-fd80-4ba0-a919-c692183f426b)
+Stevan Kapicic11:29 AM
+Meni nije isprva sacuvao key pair u ec2 dashboardu. Ako nekom jos nije, mora da doda tamo u dashboardu key pair i da ga navede pod imenom u template-u
+Milos Roknic11:30 AM
+gde se nalazi taj template koji smo kreirali?
+Kosta Kupresak11:31 AM
+Можеш га видети у прегледу Stack-ова, има таб template
+Milos Roknic11:33 AM
+zbog toga sam i ja pitao, posto moram da ispravim taj key pair
+Milos Roknic11:35 AM
+moram da pravim novi template?
+Stoja Obradovic11:35 AM
+ima ikonica (izgleda kao export) kojom kreiras novi stack na ostovu template
+*osnovu
+Milos Roknic11:36 AM
+aah
+aha*
+Marko Dragnic11:36 AM
+mozes da load-ujes prethodne template i da is samo editujes 
+is dizajnera
+Katarina Ivanic11:37 AM
+izgleda da key ohio ne moze da se koristi za Frankfurt :)
+Marko Dragnic11:37 AM
+nije bilo pitanje ali ok :D
+Katarina Ivanic11:37 AM
+key za Ohio https://prnt.sc/shu84d , greska u kucanju
+ne
+Ivan Kockarevic11:47 AM
+Resources:
+  Ec2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+      SecurityGroups:
+        - !Ref InstanceSecurityGroup
+      KeyName: basepc
+      ImageId: ami-03ab4e8f1d88ce614
+  HelloBucket:
+    Type: AWS::S3::Bucket
+  InstanceSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+      
+Nemanja Sobo11:52 AM
+top
+Dejan Besic11:52 AM
+Super je bilo, hvala ti KOcka! 
